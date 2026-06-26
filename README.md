@@ -9,3 +9,21 @@ git clone https://github.com/ggml-org/llama.cpp.git src
 ```
 
 (install the systemd file)
+
+TODO: write instructions for this
+
+## service layout when set up
+```
+.
+├── presets.ini         # default and model configs for router mode
+├── llama_cpp_env       # source this for environment
+├── llama-cpp.service   # systemd
+├── local
+├── src
+├── restart.sh          # util scripts
+├── start.sh
+├── stop.sh
+├── test.sh             # run test suite for server (long)
+├── install.sh          # install from ./src/build/ to ./local/
+└── update.sh           # git the latest release tab and build in ./src/
+```
