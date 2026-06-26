@@ -1,0 +1,17 @@
+[Unit]
+Description=Dev server: llama-cpp
+After=network.target
+
+[Service]
+Type=simple
+Environment="LD_LIBRARY_PATH=%h/llama_cpp/local/lib"
+Environment="LLAMA_ARG_MODELS_PRESET=%h/llama_cpp/presets.ini"
+WorkingDirectory=%h/llama_cpp
+ExecStart=%h/llama_cpp/local/bin/llama-server --host 0.0.0.0
+Restart=on-failure
+RestartSec=2
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=default.target
