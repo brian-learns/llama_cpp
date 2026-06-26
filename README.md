@@ -11,7 +11,14 @@ git clone https://github.com/ggml-org/llama.cpp.git src
 ./update.sh  # build the latest release tag
 ```
 
-(install the systemd file) TODO: write instructions for this
+## Systemd setup
+By default, systemd user services are terminated the moment you close your SSH session or log out of your desktop.
+```
+sudo loginctl enable-linger $USER  # if needed
+mkdir -p ~/.config/systemd/user/
+cp llama-cpp.service ~/.config/systemd/user/
+systemctl --user daemon-reload
+```
 
 ## service layout when set up
 
@@ -27,5 +34,5 @@ git clone https://github.com/ggml-org/llama.cpp.git src
 ├── stop.sh
 ├── test.sh             # run test suite for server (long)
 ├── install.sh          # install from ./src/build/ to ./local/
-└── update.sh           # git the latest release tab and build in ./src/
+└── update.sh           # git the latest release tag and build in ./src/
 ```
