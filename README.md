@@ -11,9 +11,7 @@ git clone https://github.com/ggml-org/llama.cpp.git src
 ./update.sh  # build the latest release tag
 ```
 
-(install the systemd file)
-
-TODO: write instructions for this
+(install the systemd file) TODO: write instructions for this
 
 ## service layout when set up
 
