@@ -31,7 +31,6 @@ else
         exit 1
     fi
     echo "Found ${#PIDs[@]} active llama-server processes. Starting inspection..."
-    echo "-----------------------------------------------------------------"
 fi
 
 # 2. Loop through all identified PIDs and perform the inspection
@@ -49,11 +48,9 @@ for PID in "${PIDs[@]}"; do
     [ -z "$ALIAS" ] && ALIAS="Unknown Model"
 
     echo "================================================================="
-    echo " AGENT SLOT INSPECTOR: $ALIAS (PID: $PID | Port: $PORT)"
-    echo "================================================================="
+    echo "$ALIAS (PID: $PID | Port: $PORT)"
 
     # Extract Hardware Resource Tracking
-    echo -e "\n[1/2] HARDWARE INVENTORY (Unified Memory & GPU)"
     if [ -d "/proc/$PID" ]; then
         RSS_KB=$(grep -i VmRSS "/proc/$PID/status" | awk '{print $2}')
         VSZ_KB=$(grep -i VmSize "/proc/$PID/status" | awk '{print $2}')
@@ -70,7 +67,6 @@ for PID in "${PIDs[@]}"; do
     fi
 
     # Pull Live State from the /slots API Endpoints
-    echo -e "\n[2/2] ROUTED CONTEXT SLOTS (API /slots)"
     SLOTS_JSON=$(curl -s "http://127.0.0.1:${PORT}/slots")
 
     if [ -z "$SLOTS_JSON" ]; then
