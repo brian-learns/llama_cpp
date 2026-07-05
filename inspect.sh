@@ -43,6 +43,9 @@ for PID in "${PIDs[@]}"; do
 
     # Extract Port and Alias
     PORT=$(echo "$CMD_LINE" | grep -oP -- '--port \s*\K\d+')
+    if [ -z "$PORT" ]; then
+	    continue
+    fi
     ALIAS=$(echo "$CMD_LINE" | grep -oP -- '--alias \s*\K\S+')
     [ -z "$PORT" ] && PORT="8080" 
     [ -z "$ALIAS" ] && ALIAS="Unknown Model"
@@ -76,13 +79,15 @@ for PID in "${PIDs[@]}"; do
     fi
 
     # Use JQ parsing if available, fallback to regex if not
+    # echo "http://127.0.0.1:${PORT}/slots"
     if command -v jq &> /dev/null; then
         echo "$SLOTS_JSON" | jq -c '.[]' | while read -r slot; do
             ID=$(echo "$slot" | jq '.id')
             IS_PROCESSING=$(echo "$slot" | jq '.is_processing')
             PROMPT=$(echo "$slot" | jq '.n_prompt_tokens // 0')
             DECODED=$(echo "$slot" | jq '.next_token[0].n_decoded // 0') # Guarded nested index parsing
-            
+	    CTX=$(echo "$slot" | jq '.n_ctx // 0')
+
             if [ "$IS_PROCESSING" = "true" ]; then
                 COLOR="\e[31m" 
                 STATUS="PROCESSING"
@@ -90,7 +95,7 @@ for PID in "${PIDs[@]}"; do
                 COLOR="\e[32m" 
                 STATUS="IDLE"
             fi
-            echo -e " -> Slot [${ID}]: Status = ${COLOR}${STATUS}\e[0m | Context Ingested = ${PROMPT} tokens | Active Gen Tokens = ${DECODED}"
+            echo -e " -> Slot [${ID}]: Status = ${COLOR}${STATUS}\e[0m | Context Ingested = ${PROMPT} tokens | Active Gen Tokens = ${DECODED} | n_ctx = ${CTX}"
         done
     else
         echo "$SLOTS_JSON" | sed 's/},{"/\n/g' | while read -r line; do
@@ -114,4 +119,4 @@ for PID in "${PIDs[@]}"; do
     echo "================================================================="
     echo "" # Spacer between multiple process logs
 done
-
+free -mh
