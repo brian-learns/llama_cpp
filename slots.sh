@@ -120,3 +120,4 @@ for PID in "${PIDs[@]}"; do
     echo "" # Spacer between multiple process logs
 done
 free -mh
+nvidia-smi --query-gpu=clocks.current.graphics,power.draw,temperature.gpu --format=csv,noheader
