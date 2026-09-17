@@ -47,7 +47,7 @@ for PID in "${PIDs[@]}"; do
 	    continue
     fi
     ALIAS=$(echo "$CMD_LINE" | grep -oP -- '--alias \s*\K\S+')
-    [ -z "$PORT" ] && PORT="8080" 
+    [ -z "$PORT" ] && PORT="9931" 
     [ -z "$ALIAS" ] && ALIAS="Unknown Model"
 
     echo "================================================================="

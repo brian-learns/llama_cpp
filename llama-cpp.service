@@ -10,6 +10,11 @@ WorkingDirectory=%h/llama_cpp
 ExecStart=%h/llama_cpp/local/bin/llama-server \
     --host 0.0.0.0 \
     --log-prompts-dir %h/llama_cpp/prompt_logs \
+    --slot-save-path %h/llama_cpp/slots_cache \
+    --models-max 3 \
+# https://github.com/ggml-org/llama.cpp/issues/26116
+    --port 9931 \
+#    --webui-mcp-proxy \
     --models-dir %h/models
 Restart=on-failure
 RestartSec=2
