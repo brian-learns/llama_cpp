@@ -25,7 +25,7 @@ systemctl --user daemon-reload
 ```
 ~/llama_cpp/
 ├── presets.ini         # default and model configs for router mode
-├── llama_cpp_env       # source this for environment
+├── .envrc              # environment setup
 ├── llama-cpp.service   # systemd
 ├── local
 ├── src
@@ -36,3 +36,10 @@ systemctl --user daemon-reload
 ├── install.sh          # install from ./src/build/ to ./local/
 └── update.sh           # git the latest release tag and build in ./src/
 ```
+
+python utility to read REST API
+```
+uv venv
+uv pip install https://github.com/brian-learns/llama-server-tool
+```
+
