@@ -40,6 +40,6 @@ systemctl --user daemon-reload
 python utility to read REST API
 ```
 uv venv
-uv pip install https://github.com/brian-learns/llama-server-tool
+uv pip install -U git+https://github.com/brian-learns/llama-server-tool
 ```
 
